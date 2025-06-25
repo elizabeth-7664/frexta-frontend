@@ -1,12 +1,72 @@
-# React + Vite
+# Frexta Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frexta is a full-stack client management app that helps users organize clients, projects, notes, and payments — all from a single dashboard. This is the **frontend** built using React and Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 User Authentication (Login, Register, Forgot Password)
+- 🧑 Clients List & Details
+- 📁 Project Tracking
+- 📝 Notes for each Client (CRUD)
+- ⚙️ Settings Page (placeholder)
+- 🔒 Protected Routes with React Router
+- 🌈 TailwindCSS for styling
+- 🌐 Axios for API requests
 
-## Expanding the ESLint configuration
+## 📂 Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+src/
+│
+├── components/          # Navbar, ProtectedRoute
+├── context/             # AuthContext for managing login state
+├── pages/               # Login, Register, Dashboard, Clients, Notes etc.
+├── utils/               # Axios config (api.js)
+├── App.jsx              # Main routing and layout
+└── main.jsx             # App entry point
+
+🛠️ Tech Stack
+
+    React
+
+    TailwindCSS
+
+    Vite
+
+    React Router
+
+    Axios
+
+    PostgreSQL & FastAPI Backend (link if available)
+
+📦 Setup Instructions
+
+    Clone the repo
+
+git clone https://github.com/elizabeth-7664/frexta-frontend.git
+cd frexta-frontend
+
+Install dependencies
+
+npm install
+
+Start the dev server
+
+npm run dev
+
+Environment Variables
+
+Create a .env file with your backend API base URL:
+
+    VITE_API_BASE_URL=http://localhost:8000/api
+
+✅ To-Do
+
+Connect to the backend
+
+Add Payments page
+
+Implement real Settings logic
+
+    Form validations & loading states
+
