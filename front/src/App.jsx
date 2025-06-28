@@ -1,6 +1,8 @@
+//App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,9 +16,13 @@ import ProjectDetail from './pages/ProjectDetail';
 import Payments from './pages/Payments';
 import ClientNotes from './pages/ClientNotes';
 import Settings from './pages/Settings';
+import Layout from './components/Layout';
 
+
+//protected routes
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
+
   return user ? children : <Navigate to="/login" />;
 };
 
@@ -24,6 +30,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <style>{`body { background-color: #111827; }`}</style>
         <Routes>
           {/* Public routes */}
           <Route path="/login" element={<Login />} />
@@ -31,42 +38,38 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
 
-          {/* Protected routes */}
+          {/* Protected routes with Layout (includes Sidebar) */}
           <Route
-            path="/dashboard"
-            element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
-          />
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/clients/:id" element={<ClientDetails />} />
+            <Route path="/clients/:id/notes" element={<ClientNotes />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
+
+          {/* Redirect root to dashboard or login */}
           <Route
-            path="/clients"
-            element={<ProtectedRoute><Clients /></ProtectedRoute>}
-          />
-          <Route
-            path="/clients/:id"
-            element={<ProtectedRoute><ClientDetails /></ProtectedRoute>}
-          />
-          <Route
-            path="/clients/:id/notes"
-            element={<ProtectedRoute><ClientNotes /></ProtectedRoute>}
-          />
-          <Route
-            path="/projects"
-            element={<ProtectedRoute><Projects /></ProtectedRoute>}
-          />
-          <Route
-            path="/projects/:id"
-            element={<ProtectedRoute><ProjectDetail /></ProtectedRoute>}
-          />
-          <Route
-            path="/payments"
-            element={<ProtectedRoute><Payments /></ProtectedRoute>}
-          />
-          <Route
-            path="/settings"
-            element={<ProtectedRoute><Settings /></ProtectedRoute>}
+            path="/"
+            element={
+              localStorage.getItem("user") ? (
+                <Navigate to="/dashboard" />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
 
-          {/* Redirect root to login */}
-          <Route path="/" element={<Navigate to="/login" />} />
+          {/* Catch-all */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
     </AuthProvider>
